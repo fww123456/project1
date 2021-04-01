@@ -1,28 +1,14 @@
 package core.rdd_operator
 
-import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.rdd.RDD
+import org.apache.spark.{HashPartitioner, SparkConf, SparkContext}
 
 object operator_transform3 {
   def main(args: Array[String]): Unit = {
     val sparkConf = new SparkConf().setMaster("local[*]").setAppName("operator")
     val sc = new SparkContext(sparkConf)
 
-    //mapPartitions，把全部的数据拿到了之后再做操作
-    val rdd = sc.makeRDD(List(1, 2, 3, 4), numSlices = 2)
-    //【1，2】【3，4】
-
-    val mpiRDD = rdd.mapPartitionsWithIndex(
-      (index, iter) => {
-        //(分区编号，数字)
-        iter.map(
-          num => {
-            (index, num)
-          }
-        )
-      }
-    )
-
-    mpiRDD.collect().foreach(println)
+    val rdd = sc.makeRDD(List(("a",1),("a",2),("c",3),("b",4)))
 
     sc.stop()
   }

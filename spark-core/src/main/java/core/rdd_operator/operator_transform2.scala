@@ -14,7 +14,6 @@ object operator_transform2 {
       println(iter.next())
     }
     //for遍历
-    刚刚是错的
     for(i<-iter){
       println(i)
     }
